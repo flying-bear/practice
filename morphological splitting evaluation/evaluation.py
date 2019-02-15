@@ -48,10 +48,18 @@ def evaluate(file, standard): # evaluates two given texts
             elif not f_line:
                 with open('evaluation.txt', 'a', encoding='utf-8') as file:
                         file.write(f'\nError: bad line {i+1}')
+            else:
+                s_list = s_line.split('\t')
+                f_list = f_line.split('\t')
+                if s_list[0] != f_list[0]:
+                    with open('evaluation.txt', 'a', encoding='utf-8') as file:
+                        file.write(f'\nError: bad line {i+1}')
+                else:
+                    pass
 
 def main():
     initialize_evaluation()
-    evaluate('a\n\n\nb','a\n\n\nc')
+    evaluate('a\tab\n\n\nb','ab\tb\n\n\nc')
 
 if __name__ == '__main__':
     main()
