@@ -3,3 +3,6 @@ Recall = 0
 F-measure = 0 
 CorrectMorphemes = 0 
 CorrectTags = 0 
+
+Error: bad line 1
+Error: bad line 4
