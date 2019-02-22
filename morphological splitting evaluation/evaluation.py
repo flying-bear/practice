@@ -1,28 +1,26 @@
 import os
+from collections import OrderedDict
+from sys import argv
 
 
-def input_files(): # opens and reads input files
-    stan = 'standard'
-    test = 'test'
-    files = {stan:[], test:[]}
-    for key in files:
-        f_path = input(f'Input {key} file directory: ')
+def input_files(path_dict): # opens and reads input files
+    files = {'standard':{},
+             'test': {}}
+    for key in path_dict:
+        f_path = path_dict[key]
         f_name = os.path.splitext(os.path.basename(f_path))[0]
         with open(f_path, 'r', encoding='utf-8') as file: # os.path -- make the path universal
             f_text = file.read()
-        files[key] += [f_path, f_name, f_text]
+        files[key].update({'path':f_path, 'name':f_name, 'text':f_text})
     return files # returns a dictionary of files and corresponding paths, names, and texts
 
 
-def initialize_evaluation(): # writes evaluetion file with zero values
+def initialize_evaluation(): # creates evaluation with zero values
     evaluation = {'Hits':0,
                   'Deletions':0,
                   'Insertions':0,
                   'CorrectMorphemes':0,
                   'CorrectTags':0}
-    with open('log.txt', 'w', encoding='utf-8') as file:
-        for key in evaluation:
-            file.write(' '.join([key, '=', str(evaluation[key]), '\n']))
     return evaluation
 
 
@@ -82,10 +80,11 @@ def evaluate(file, standard, ev_dict): # evaluates two given texts
     s_lines = standard.split('\n')
     s_length = len(s_lines)
     if len(f_lines) != s_length: # check that the files have the same number of lines
-        with open('log.txt', 'a', encoding='utf-8') as file:
-            file.write('\nError: wrong number of lines')
-        return False
+        with open('log.txt', 'w', encoding='utf-8') as file:
+            file.write('Error: wrong number of lines')
+        return ev_dict
     else:
+        file = open('log.txt', 'w', encoding='utf-8')
         for i in range(s_length):
             s_line = s_lines[i].strip()
             f_line = f_lines[i].strip()
@@ -93,25 +92,50 @@ def evaluate(file, standard, ev_dict): # evaluates two given texts
                 if not f_line:
                     continue
                 else:
-                    with open('log.txt', 'a', encoding='utf-8') as file:
-                        file.write(f'\nError: bad line {i+1}')
+                    file.write(f'Error: bad line {i+1}\n')
             elif not f_line:
-                with open('log.txt', 'a', encoding='utf-8') as file:
-                        file.write(f'\nError: bad line {i+1}')
+                file.write(f'Error: bad line {i+1}\n')
             else:
                 s_list = s_line.split('\t') # list with the word as 0 element
                 f_list = f_line.split('\t')
                 if s_list[0] != f_list[0]:
-                    with open('log.txt', 'a', encoding='utf-8') as file:
-                        file.write(f'\nError: bad line {i+1}')
+                    file.write(f'Error: bad line {i+1}\n')
                 else:
-                    ev_dict = compare(f_list[1:], s_list[1:], ev_dict) # compare segmentation lists (without words)
+                    ev_dict.update(compare(f_list[1:], s_list[1:], ev_dict)) # compare segmentation lists (without words)
+        file.close()
         return ev_dict
 
+def write_results(evaluation):
+    H = evaluation['Hits']
+    D = evaluation['Deletions']
+    I = evaluation['Insertions']
+    if H or D or I:
+        Precision = H/(H+I)
+        Recall = H/(H+D)
+        results = OrderedDict({'Precision': Precision,
+                   'Recall': Recall,
+                   'F-measure': (2*Precision*Recall)/(Precision+Recall),
+                   'CorrectMorphemes':evaluation['CorrectMorphemes'],
+                   'CorrectTags':evaluation['CorrectTags']})
+    else:
+        results = OrderedDict({'Precision': 0,
+                   'Recall': 0,
+                   'F-measure': 0,
+                   'CorrectMorphemes': 0,
+                   'CorrectTags': 0})
+    with open('results.txt', 'w', encoding='utf-8') as file:
+        for key in results:
+            file.write(key+' = '+str(results[key])+'\n')
+
 def main():
+    try:
+        paths = {'standard':argv[1], 'test':argv[2]}
+    except IndexError:
+        paths = {'standard': input('print standard file path: '),
+                 'test': input('print test file path: ')}
     evaluation = initialize_evaluation()
-    files = input_files()
-    print(evaluate(files['test'][2], files['standard'][2], evaluation))
+    files = input_files(paths)
+    write_results(evaluate(files['test']['text'], files['standard']['text'], evaluation))
 
 if __name__ == '__main__':
     main()
