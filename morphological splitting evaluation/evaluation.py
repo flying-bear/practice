@@ -51,15 +51,15 @@ def compare_boundaries(f_bound, s_bound): # compares two given sets of boundarie
 
 def check_morphs_and_tags(f_tag_dict, s_tag_dict): # compares morphemes and tags given two dicts
     loc_eval = {'CorrectMorphemes':0, 'CorrectTags':0}
-    for key in s_tag_dict:
-        if key in f_tag_dict:
-            loc_eval['CorrectMorphemes'] += 1
-            if s_tag_dict[key] == f_tag_dict[key]:
-                loc_eval['CorrectTags'] += 1
+    for key in s_tag_dict: # there must be a morpheme tag
+        if key in f_tag_dict: # there is a morpheme tag
+            loc_eval['CorrectMorphemes'] += 1 # that must be a correctly split morpheme
+            if s_tag_dict[key] == f_tag_dict[key]: # tags are equal
+                loc_eval['CorrectTags'] += 1 # tag is correct
     return loc_eval
 
 
-def compare(f_line_list, s_line_list, evaluation):
+def compare(f_line_list, s_line_list, evaluation): # compares to lines
     f_data = list_boundaries_and_tags(f_line_list)
     f_bound = f_data['boundaries']
     f_tags = f_data['tag_dict']
@@ -96,12 +96,12 @@ def evaluate(file, standard, ev_dict): # evaluates two given texts
             elif not f_line:
                 file.write(f'Error: bad line {i+1}\n')
             else:
-                s_list = s_line.split('\t') # list with the word as 0 element
+                s_list = s_line.split('\t') # list with the word as 0 element and taged morphemes as 1 element
                 f_list = f_line.split('\t')
                 if s_list[0] != f_list[0]:
                     file.write(f'Error: bad line {i+1}\n')
                 else:
-                    ev_dict.update(compare(f_list[1:], s_list[1:], ev_dict)) # compare segmentation lists (without words)
+                    ev_dict.update(compare(f_list[1].split(), s_list[1].split(), ev_dict)) # compare segmentation lists (without words)
         file.close()
         return ev_dict
 
@@ -109,7 +109,11 @@ def write_results(evaluation):
     H = evaluation['Hits']
     D = evaluation['Deletions']
     I = evaluation['Insertions']
-    if H or D or I:
+    print(f'H = {H}')
+    print(f'D = {D}')
+    print(f'I = {I}')
+    print(f'CorrectTags = {evaluation["CorrectTags"]}')
+    if H or (D and I):
         Precision = H/(H+I)
         Recall = H/(H+D)
         results = OrderedDict({'Precision': Precision,

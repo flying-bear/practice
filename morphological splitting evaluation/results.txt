@@ -1,5 +1,5 @@
-Precision = 0
-Recall = 0
-F-measure = 0
-CorrectMorphemes = 0
-CorrectTags = 0
+Precision = 1.0
+Recall = 1.0
+F-measure = 1.0
+CorrectMorphemes = 10
+CorrectTags = 9
