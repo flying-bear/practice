@@ -22,7 +22,7 @@ def get_dict(train_text, test_text):
     dictionary = {}
     words = sorted(list(set([word for word in copy(test_text).split('\n')])))
     for word in words:
-        print(word)
+        print('working on: ' + word)
         regex = f'\t(.*?)\t{word}\t'
         matches = re.findall(regex, train_text)
         if matches:
@@ -43,7 +43,7 @@ def compl(test_text, dictionary):
         if lines[i]:
             word = lines[i].split('\t')[0]
             output.append(dictionary[word])
-    return '\n'.join()
+    return '\n'.join(output)
 
 
 def main():
