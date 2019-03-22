@@ -1,5 +1,8 @@
 Precision = 1.0
-Recall = 1.0
-F-measure = 1.0
-CorrectMorphemes = 10
-CorrectTags = 9
+Recall = 0.48944281524926686
+F-measure = 0.6572159873990943
+CorrectMorphemes = 715
+CorrectTags = 715
+AllWordforms = 1669
+TotallyCorrect = 715
+ShareCorrect = 0.4284002396644697

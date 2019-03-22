@@ -1,0 +1,34 @@
+3	g’ö	jo	ADV	_	_	_	_	_	_
+4	ülemba	ülemba	ADV	_	_	_	_	_	_
+5	kombud	UNKN	_	_	_	_	_	_	_
+
+# text_id = 94
+# sent_id = 94-24
+# text = Necidame tukume minä tulin’ kodihesai.
+# text_ru = С этой вязанкой я дошла до дому.
+1	Necidame	UNKN	_	_	_	_	_	_	_
+2	tukume	UNKN	_	_	_	_	_	_	_
+3	minä	minä	PRON	_	_	_	_	_	_
+3	minä	mö	PRON	_	Number=Sing|Case=Nom	_	_	_	_
+4	tulin’	tulda	VERB	_	_	_	_	_	_
+5	kodihesai	kodi	NOUN	_	Number=Plur|Case=Ter	_	_	_	_
+5	kodihesai	koda	NOUN	_	Number=Plur|Case=Ter	_	_	_	_
+
+# text_id = 94
+# sent_id = 94-25
+# text = Kaiken g’augan turzot’.
+# text_ru = Вся нога распухла.
+1	Kaiken	kaik	NOUN	_	_	_	_	_	_
+1	Kaiken	kaiken	ADV	_	_	_	_	_	_
+2	g’augan	UNKN	_	_	_	_	_	_	_
+3	turzot’	UNKN	_	_	_	_	_	_	_
+
+# text_id = 94
+# sent_id = 94-26
+# text = A konz mado kokaiž, kuni mina siižuin’ madonnou, kaik minain’ südäimed pani tuskha i oksondolo kändaškanz’.
+# text_ru = А когда змея меня ужалила, пока я стояла около змеи, мне стало плохо, и стало тошнить.
+1	A	a	CCONJ	_	_	_	_	_	_
+2	konz	konz	ADV	_	_	_	_	_	_
+3	mado	mado	NOUN	_	_	_	_	_	_
+4	kokaiž	UNKN	_	_	_	_	_	_	_
+5	kuni	kuni	SCONJ	_	_	_	_	_	_

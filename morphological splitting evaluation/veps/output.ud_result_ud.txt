@@ -1,0 +1,8 @@
+Share of words with correct pos: 0.3026424442609414
+Share of words with correct lemma: 0.6012592898431048
+Share of sentences with correct pos: 0.02912621359223301
+Share of sentences with correct lemma: 0.07813222376329172
+Feature precision: 0.547076105204253
+Feature recall: 0.8072873658133773
+Feature F2: 0.6521847898599066
+Errors: 
