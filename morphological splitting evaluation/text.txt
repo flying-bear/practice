@@ -1,0 +1,37 @@
+Metrics
+	Universal Dependencies
+	Morphology
+		Each morphological boundary from the standard file could be either present (hits=H) or absent (deletion=D) in the test file. There could also be added boundaries, absent in the standard file. (insertion=I)
+		The metrics used were:
+			Precision = H/(H+I)
+			Recall = H/(H+D)
+			F-measure = (2*Precision*Recall)/(Precision+Recall)=((2*H^2)/((H+I)*(H+D)))/((2*H^2+H*I+H*D)/((H+I)*(H+D)))= (2*H^2)/(2*H^2+H*I+H*D)
+			ShareCorrect = the share of correct splittings with correct tags
+		
+	Form generation
+
+Baselines
+	Universal Dependencies
+		As the lemm baseline we used the word form in lower register. As the baseline for the part of speech column the most frequent part of speech in the training dataset was used. All other fields were left empty ("_"). 
+		For Veps language this technique resulted in
+			Share of words with correct pos: 0.3026424442609414
+			Share of words with correct lemma: 0.6012592898431048
+			Share of sentences with correct pos: 0.02912621359223301
+			Share of sentences with correct lemma: 0.07813222376329172
+			Feature precision: 0.547076105204253
+			Feature recall: 0.8072873658133773
+			Feature F2: 0.6521847898599066
+			Errors:
+	Morphology
+		As the simplest baseline, we used a script that produced splits. For evenki language this technique resulted in
+			Precision = 1.0
+			Recall = 0.48944281524926686
+			F-measure = 0.6572159873990943
+			CorrectMorphemes = 715
+			CorrectTags = 715
+			AllWordforms = 1669
+			TotallyCorrect = 715
+			ShareCorrect = 0.4284002396644697		
+	Form generation
+		Two baselines were used. First did not change the form at all. The performance on Veps language was as follows. [...]
+		The more complicated baseline used the most frequent form with the same lemm found in the training dataset. It showed [...] on Veps language 
